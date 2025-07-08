@@ -55,7 +55,19 @@
     </section>
     <section id="chat" class="tab-section">
       <h2><span class="material-icons">chat</span> Chat</h2>
-      <div id="chat-area"></div>
+      <div class="chat-container">
+        <div class="video-avatar-container">
+          <video id="avatar-still" class="avatar-video active" autoplay muted loop playsinline>
+            <source src="assets/videos/still.mp4" type="video/mp4">
+          </video>
+          <video id="avatar-move" class="avatar-video" muted playsinline>
+            <source src="assets/videos/move.mp4" type="video/mp4">
+          </video>
+          <div class="chat-overlay">
+            <div id="chat-area"></div>
+          </div>
+        </div>
+      </div>
       <div class="input-row">
         <input id="chat-input" type="text" placeholder="Chiedi pure!">
         <button class="modern-btn" onclick="sendMessage()"><span class="material-icons">send</span></button>

@@ -44,9 +44,15 @@ function sendMessage() {
       loader.remove();
       const botMsg = document.createElement('div');
       botMsg.className = 'chat-msg bot';
-      botMsg.textContent = data.reply || 'Nessuna risposta.';
+      const botReply = data.reply || 'Nessuna risposta.';
+      botMsg.textContent = botReply;
       chatArea.appendChild(botMsg);
       chatArea.scrollTop = chatArea.scrollHeight;
+      
+      // Avvia l'animazione video-avatar basata sulla lunghezza della risposta
+      const responseLength = botReply.length;
+      const estimatedDuration = Math.max(2000, Math.min(8000, responseLength * 50)); // 2-8 secondi
+      startVideoAvatarSpeaking(estimatedDuration);
     })
     .catch((err) => {
       loader.remove();
@@ -393,6 +399,21 @@ document.addEventListener('DOMContentLoaded', function() {
     floatingFAQBtn.onclick = function() {
       openFAQModal();
     };
+  }
+
+  // Inizializza il sistema video-avatar
+  setTimeout(() => {
+    initVideoAvatar();
+  }, 500); // Leggero delay per assicurarsi che gli elementi DOM siano pronti
+
+  // Supporto per l'invio della chat con il tasto Enter
+  const chatInput = document.getElementById('chat-input');
+  if (chatInput) {
+    chatInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
   }
 });
 
@@ -1639,6 +1660,134 @@ window.addEventListener('appinstalled', (evt) => {
   dismissInstallBanner();
 });
 
-// Esponi le funzioni globalmente
-window.installApp = installApp;
-window.dismissInstallBanner = dismissInstallBanner;
+// Video Avatar System
+let stillVideo = null;
+let moveVideo = null;
+let isVideoAvatarSpeaking = false;
+
+// Initialize video avatar system
+function initVideoAvatar() {
+  stillVideo = document.getElementById('avatar-still');
+  moveVideo = document.getElementById('avatar-move');
+  
+  if (!stillVideo || !moveVideo) {
+    console.log('Video avatar elements not found');
+    return;
+  }
+  
+  console.log('Initializing video avatar system...');
+  
+  // Ensure still video is active by default
+  stillVideo.classList.add('active');
+  moveVideo.classList.remove('active');
+  
+  // Handle video loading
+  stillVideo.addEventListener('canplay', () => {
+    console.log('Still video loaded and ready');
+    stillVideo.play().catch(e => console.log('Still video autoplay prevented:', e));
+  });
+  
+  moveVideo.addEventListener('canplay', () => {
+    console.log('Move video loaded and ready');
+  });
+  
+  // Handle move video ending - restart if still speaking
+  moveVideo.addEventListener('ended', () => {
+    console.log('Move video ended');
+    if (isVideoAvatarSpeaking) {
+      console.log('Still speaking, restarting move video');
+      moveVideo.currentTime = 0;
+      moveVideo.play().catch(e => console.log('Move video restart failed:', e));
+    } else {
+      console.log('Finished speaking, returning to still video');
+      returnToStillVideo();
+    }
+  });
+  
+  // Handle video errors
+  stillVideo.addEventListener('error', (e) => {
+    console.error('Error loading still video:', e);
+  });
+  
+  moveVideo.addEventListener('error', (e) => {
+    console.error('Error loading move video:', e);
+  });
+  
+  console.log('✅ Video avatar system initialized');
+}
+
+// Start avatar speaking animation (switch to move video)
+function startVideoAvatarSpeaking(duration) {
+  if (!stillVideo || !moveVideo || isVideoAvatarSpeaking) {
+    return;
+  }
+  
+  console.log('Starting video avatar speaking animation for', duration, 'ms');
+  isVideoAvatarSpeaking = true;
+  
+  // Add speaking class for visual effects
+  stillVideo.classList.add('speaking');
+  moveVideo.classList.add('speaking');
+  
+  // Smooth transition to move video
+  stillVideo.classList.add('transitioning');
+  moveVideo.classList.add('transitioning');
+  
+  setTimeout(() => {
+    stillVideo.classList.remove('active');
+    moveVideo.classList.add('active');
+    
+    moveVideo.currentTime = 0;
+    moveVideo.play().then(() => {
+      console.log('Move video started playing');
+    }).catch(e => {
+      console.log('Move video play failed:', e);
+      returnToStillVideo();
+      return;
+    });
+    
+    stillVideo.classList.remove('transitioning');
+    moveVideo.classList.remove('transitioning');
+  }, 200);
+  
+  // Auto return to still video after duration
+  setTimeout(() => {
+    if (isVideoAvatarSpeaking) {
+      returnToStillVideo();
+    }
+  }, duration);
+}
+
+// Return to still video
+function returnToStillVideo() {
+  if (!stillVideo || !moveVideo) return;
+  
+  console.log('Returning to still video');
+  isVideoAvatarSpeaking = false;
+  
+  // Remove speaking effects
+  stillVideo.classList.remove('speaking');
+  moveVideo.classList.remove('speaking');
+  
+  // Smooth transition back to still video
+  stillVideo.classList.add('transitioning');
+  moveVideo.classList.add('transitioning');
+  
+  setTimeout(() => {
+    moveVideo.classList.remove('active');
+    stillVideo.classList.add('active');
+    
+    // Ensure still video is playing
+    stillVideo.play().catch(e => console.log('Still video play failed:', e));
+    
+    stillVideo.classList.remove('transitioning');
+    moveVideo.classList.remove('transitioning');
+  }, 200);
+}
+
+// Stop avatar speaking
+function stopVideoAvatarSpeaking() {
+  console.log('Stopping video avatar speaking');
+  isVideoAvatarSpeaking = false;
+  returnToStillVideo();
+}
