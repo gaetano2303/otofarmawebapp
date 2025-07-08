@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="App ufficiale Otofarma per assistenza virtuale, analisi orecchie, test udito e farmacie convenzionate">
+<meta name="theme-color" content="#42e695">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Otofarma">
+<link rel="apple-touch-icon" href="assets/images/icons/appicon.png">
+<link rel="icon" type="image/png" href="assets/images/icons/appicon.png">
+<link rel="manifest" href="manifest.json">
+<title>Otofarma WebApp</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+<div class="app-container">
+  <header>
+    <img src="assets/images/logo-otofarma.png" alt="Otofarma logo" class="logo logo-large">
+  </header>
+  <main>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="home"><span class="material-icons">home</span>Home</button>
+      <button class="tab-btn" data-tab="chat"><span class="material-icons">chat</span>Chat</button>
+      <button class="tab-btn" data-tab="earcheck"><span class="material-icons">medication</span>Analisi</button>
+      <button class="tab-btn" data-tab="hearingtest"><span class="material-icons">hearing</span>Test</button>
+      <button class="tab-btn" data-tab="contatti"><span class="material-icons">contact_mail</span>Contatti</button>
+    </div>
+    <section id="home" class="tab-section active home-centered">
+      <h2>Benvenuto in Otofarma</h2>
+      <img src="assets/images/logo-otofarma.png" alt="Otofarma logo" class="home-logo">
+      <p class="intro">Esplora le funzionalità come la chat con il nostro assistente virtuale, l'analisi delle immagini dell'orecchio, fai il test dell'udito e trova i nostri contatti.</p>
+      <div class="home-actions">
+        <button class="product-discover-btn" onclick="openProductCatalog()">
+          <span class="material-icons">medical_services</span>
+          <div class="btn-content">
+            <h3>Scopri i nostri prodotti</h3>
+            <p>Esplora la gamma completa di apparecchi acustici</p>
+          </div>
+          <span class="material-icons">arrow_forward</span>
+        </button>
+        <button class="pharmacy-discover-btn" onclick="openPharmacyMap()">
+          <span class="material-icons">local_pharmacy</span>
+          <div class="btn-content">
+            <h3>Scopri le farmacie convenzionate</h3>
+            <p>Trova la farmacia più vicina a te</p>
+          </div>
+          <span class="material-icons">arrow_forward</span>
+        </button>
+      </div>
+    </section>
+    <section id="chat" class="tab-section">
+      <h2><span class="material-icons">chat</span> Chat</h2>
+      <div id="chat-area"></div>
+      <div class="input-row">
+        <input id="chat-input" type="text" placeholder="Chiedi pure!">
+        <button class="modern-btn" onclick="sendMessage()"><span class="material-icons">send</span></button>
+      </div>
+      <button class="floating-faq-btn" id="open-faq-btn" title="Domande frequenti"><span class="material-icons">help</span></button>
+    </section>
+    <section id="earcheck" class="tab-section">
+      <h2 class="analisi-title"><span class="material-icons" style="font-size:1.2em;vertical-align:-0.1em;">medication</span> <span style="color:#2ecc40;font-weight:700;font-size:1.3em;">Analisi Orecchie</span></h2>
+      <p class="analisi-desc">Carica le immagini delle tue orecchie e ricevi una valutazione automatizzata. Tutto rimane privato e protetto.</p>
+      <div class="ear-card-row">
+        <div class="ear-card" id="left-ear-card">
+          <div class="ear-icon-bg ear-preview" id="left-ear-preview">
+            <img src="assets/images/icons/ear-left.svg" alt="Orecchio sinistro" class="ear-icon" id="left-ear-icon">
+          </div>
+          <div class="ear-label">Sinistra</div>
+          <label class="ear-upload-btn">
+            <span class="plus-icon">+</span> Carica
+            <input id="left-ear" type="file" accept="image/*">
+          </label>
+        </div>
+        <div class="ear-card" id="right-ear-card">
+          <div class="ear-icon-bg ear-preview" id="right-ear-preview">
+            <img src="assets/images/icons/ear-left.svg" alt="Orecchio destro" class="ear-icon" id="right-ear-icon" style="transform: scaleX(-1);">
+          </div>
+          <div class="ear-label">Destra</div>
+          <label class="ear-upload-btn">
+            <span class="plus-icon">+</span> Carica
+            <input id="right-ear" type="file" accept="image/*">
+          </label>
+        </div>
+      </div>
+      <button class="analisi-main-btn" id="submit-ear-btn"><span class="material-icons" style="font-size:1.2em;vertical-align:-0.1em;">upload</span> Invia analisi</button>
+      <div id="ear-result"></div>
+      <button class="floating-history-btn" id="open-history-btn" title="Storico diagnosi"><span class="material-icons">history</span></button>
+    </section>
+    <section id="hearingtest" class="tab-section">
+      <iframe src="https://hearing-screener.beyondhearing.org/ClinicaAudiologicaMAXO/Gtbsbr/" title="Test dell'udito" loading="lazy"></iframe>
+    </section>
+    <section id="contatti" class="tab-section">
+      <div class="contact-card modern-shadow">
+        <div class="contact-header">
+          <img src="assets/images/logo-otofarma.png" alt="Otofarma logo" class="contact-logo">
+          <div>
+            <h2 class="contact-title">Otofarma Spa</h2>
+            <div class="contact-address-row">
+              <span class="contact-address" id="address-to-copy">Via Ripuaria, 50k-50l, 50m<br>80014 Giugliano in Campania (NA)</span>
+              <button class="copy-btn modern-btn" onclick="copyAddress()"><span class="material-icons">content_copy</span> Copia indirizzo</button>
+            </div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <a href="tel:+3908118543072" class="quick-btn call modern-btn"><span class="material-icons">call</span> Chiama</a>
+          <a href="https://wa.me/393939045591" target="_blank" class="quick-btn whatsapp modern-btn" style="gap:0.4em;">
+            <img src="assets/images/icons/whatsapp.svg" alt="WhatsApp" style="width:24px;height:24px;vertical-align:middle;"> WhatsApp
+          </a>
+          <a href="https://www.otofarma.it/" target="_blank" class="quick-btn web modern-btn"><span class="material-icons">public</span> Sito Web</a>
+        </div>
+      </div>
+      <div class="social-card modern-shadow">
+        <span class="social-title">Seguici sui social</span>
+        <div class="social-icons">
+          <a href="https://www.youtube.com/channel/UCVFuSAOMm2MH87K8e-XQMXw" target="_blank" class="yt social-btn"><img src="assets/images/icons/youtube.svg" alt="YouTube"></a>
+          <a href="https://www.instagram.com/otofarma_s.p.a/" target="_blank" class="ig social-btn"><img src="assets/images/icons/instagram.svg" alt="Instagram"></a>
+          <a href="https://www.facebook.com/ipacusia/?locale=it_IT" target="_blank" class="fb social-btn"><img src="assets/images/icons/facebook.svg" alt="Facebook"></a>
+          <a href="https://www.linkedin.com/company/otofarma-spa/?originalSubdomain=it" target="_blank" class="li social-btn"><img src="assets/images/icons/linkedin.svg" alt="LinkedIn"></a>
+        </div>
+      </div>
+      <div class="map-card modern-shadow">
+        <div class="map-container rounded">
+          <iframe
+            src="https://www.google.com/maps?q=Otofarma+S.p.A.,+Via+Ripuaria,+Giugliano+in+Campania,+NA,+Italia&output=embed"
+            width="100%"
+            height="220"
+            style="border:0; border-radius:18px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <button class="come-btn modern-btn" onclick="openDirections()"><span class="material-icons">navigation</span> Come arrivare</button>
+      </div>
+    </section>
+    <section id="farmacie" class="tab-section">
+      <div class="pharmacy-header">
+        <button class="back-btn" onclick="goBackToHome()">
+          <span class="material-icons">arrow_back</span>
+        </button>
+        <h2><span class="material-icons">local_pharmacy</span> Farmacie Convenzionate</h2>
+        <div class="pharmacy-controls">
+          <button class="location-btn" onclick="getUserLocation()" title="Trova la tua posizione">
+            <span class="material-icons">my_location</span>
+          </button>
+        </div>
+      </div>
+      <div class="pharmacy-search">
+        <input type="text" id="pharmacy-search" placeholder="Cerca per nome, città o provincia..." onkeyup="filterPharmacies()">
+        <span class="material-icons search-icon">search</span>
+      </div>
+      <div class="pharmacy-map-container">
+        <div id="pharmacy-map"></div>
+        <div class="pharmacy-list" id="pharmacy-list">
+          <div class="loading-pharmacies">
+            <div class="loader-ring"></div>
+            <p>Caricamento farmacie...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="prodotti" class="tab-section">
+      <div class="product-header">
+        <button class="back-btn" onclick="goBackToHome()">
+          <span class="material-icons">arrow_back</span>
+        </button>
+        <h2><span class="material-icons">medical_services</span> I Nostri Prodotti</h2>
+      </div>
+      <div class="product-categories">
+        <button class="category-btn active" data-category="apparecchi">Apparecchi Acustici</button>
+        <button class="category-btn" data-category="accessori">Accessori</button>
+      </div>
+      <div class="product-grid" id="product-grid">
+        <!-- I prodotti verranno caricati dinamicamente -->
+      </div>
+    </section>
+  </main>
+  <footer>
+    <span>© 2025 Otofarma S.p.A.</span>
+  </footer>
+
+  <!-- Modale Dettaglio Prodotto -->
+  <div class="product-modal" id="product-modal">
+    <div class="product-modal-content">
+      <div class="product-modal-header">
+        <h2 id="product-modal-title">Dettaglio Prodotto</h2>
+        <button class="product-close-btn" onclick="closeProductModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="product-modal-body">
+        <div class="product-modal-image">
+          <img id="product-modal-img" src="" alt="">
+        </div>
+        <div class="product-modal-info">
+          <h3 id="product-modal-name"></h3>
+          <div id="product-modal-description"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="assets/js/script.js"></script>
+<script>
+  // Tab switching handled in script.js
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => window.switchTab(btn.dataset.tab));
+  });
+  // File label click improvement
+  document.querySelectorAll('.file-label input[type="file"]').forEach(input => {
+    input.addEventListener('change', function() {
+      this.parentNode.classList.add('file-selected');
+    });
+  });
+  function copyAddress() {
+    const address = 'Via Ripuaria, 50k-50l, 50m, 80014 Giugliano in Campania (NA)';
+    navigator.clipboard.writeText(address).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span class="material-icons">check</span> Copiato!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span class="material-icons">content_copy</span> Copia indirizzo';
+      }, 1500);
+    });
+  }
+  function openDirections() {
+    window.open('https://www.google.com/maps/dir/?api=1&destination=Via+Ripuaria+50k-50l+50m+Giugliano+in+Campania+NA', '_blank');
+  }
+</script>
+</body>
+</html>

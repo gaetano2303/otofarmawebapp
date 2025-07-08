@@ -1,0 +1,29 @@
+{
+  "name": "Otofarma",
+  "short_name": "Otofarma",
+  "description": "App ufficiale Otofarma per assistenza virtuale, analisi orecchie, test udito e farmacie convenzionate",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f8fa",
+  "theme_color": "#42e695",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "it",
+  "icons": [
+    {
+      "src": "assets/images/icons/appicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/icons/appicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["medical", "health", "productivity"],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
