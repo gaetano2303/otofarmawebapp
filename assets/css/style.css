@@ -1672,6 +1672,17 @@ footer {
     font-size: 1.2em;
   }
   
+  .pharmacy-search {
+    margin: 0 -8px 20px -8px; /* Rimuovi il margine laterale per sfruttare tutto lo spazio */
+  }
+  
+  .pharmacy-search input {
+    width: calc(100% - 32px); /* Sottrai il padding orizzontale totale */
+    padding: 12px 50px 12px 16px;
+    font-size: 0.95em;
+    border-radius: 20px; /* Bordi meno pronunciati su mobile */
+  }
+  
   .pharmacy-map-container {
     height: auto;
   }
@@ -1705,6 +1716,22 @@ footer {
   
   .pharmacy-discover-btn .material-icons:first-child {
     font-size: 1.8em; /* Icona leggermente più piccola su mobile */
+  }
+  
+  .pharmacy-search {
+    margin: 0 -12px 16px -12px; /* Margini più aggressivi per schermi piccoli */
+  }
+  
+  .pharmacy-search input {
+    width: calc(100% - 24px); /* Meno padding su schermi molto piccoli */
+    padding: 10px 40px 10px 14px;
+    font-size: 0.9em;
+    border-radius: 18px;
+  }
+  
+  .search-icon {
+    right: 12px;
+    font-size: 1.1em;
   }
   
   .pharmacy-item {
