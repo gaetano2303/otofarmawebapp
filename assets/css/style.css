@@ -207,13 +207,14 @@ main {
   margin-bottom: 0.1rem;
 }
 .chat-msg.user {
-  background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+  background: linear-gradient(90deg, #0d47a1 60%, #1565c0 100%);
   color: #fff;
   align-self: flex-end;
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 18px;
   border-top-left-radius: 18px;
   border-top-right-radius: 18px;
+  box-shadow: 0 2px 8px rgba(13, 71, 161, 0.3);
 }
 .chat-msg.bot {
   background: #fff;
@@ -2242,10 +2243,10 @@ footer {
 
 .chat-msg.user {
   background: rgba(25, 118, 210, 0.25);
-  color: #fff;
+  color: #000;
   align-self: flex-end;
   border-bottom-right-radius: 8px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  text-shadow: none;
   border: 1px solid rgba(255,255,255,0.3);
 }
 

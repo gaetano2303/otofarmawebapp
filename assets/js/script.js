@@ -1740,6 +1740,18 @@ function startVideoAvatarSpeaking(duration) {
     moveVideo.currentTime = 0;
     moveVideo.play().then(() => {
       console.log('Move video started playing');
+      
+      // Ascolta l'evento di fine video per tornare automaticamente al video still
+      const handleVideoEnd = () => {
+        console.log('Move video ended naturally');
+        moveVideo.removeEventListener('ended', handleVideoEnd);
+        if (isVideoAvatarSpeaking) {
+          returnToStillVideo();
+        }
+      };
+      
+      moveVideo.addEventListener('ended', handleVideoEnd);
+      
     }).catch(e => {
       console.log('Move video play failed:', e);
       returnToStillVideo();
@@ -1750,9 +1762,13 @@ function startVideoAvatarSpeaking(duration) {
     moveVideo.classList.remove('transitioning');
   }, 200);
   
-  // Auto return to still video after duration
+  // Fallback: torna al video still dopo la durata specificata solo se il video non è ancora finito
   setTimeout(() => {
-    if (isVideoAvatarSpeaking) {
+    if (isVideoAvatarSpeaking && !moveVideo.ended) {
+      console.log('Duration timeout reached, but video still playing');
+      // Se il video sta ancora andando, lascialo finire naturalmente
+    } else if (isVideoAvatarSpeaking && moveVideo.ended) {
+      console.log('Duration timeout reached and video ended');
       returnToStillVideo();
     }
   }, duration);
