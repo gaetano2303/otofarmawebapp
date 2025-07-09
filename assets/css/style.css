@@ -962,6 +962,7 @@ footer {
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1721,6 +1722,7 @@ footer {
   
   .pharmacy-search {
     margin: 0 -12px 16px -12px; 
+  }
   
   .pharmacy-search input {
     width: calc(100% - 24px); 
