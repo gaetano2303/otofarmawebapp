@@ -273,8 +273,6 @@ pre#ear-result {
   border: 1px solid #e0e7ef;
 }
 
-/* Rimosse classi non più necessarie per storico inline */
-
 .history-title {
   font-size: 1.2rem;
   font-weight: 600;
@@ -308,7 +306,7 @@ pre#ear-result {
   margin-top: 10px;
 }
 
-/* Iframe test udito più alto su mobile */
+/* Iframe test udito */
 @media (max-width: 768px) {
   #hearingtest iframe {
     min-height: 60vh;
@@ -344,7 +342,7 @@ footer {
   border-bottom-right-radius: 22px;
   margin-top: auto;
 }
-/* --- CONTATTI MODERNO E OTTIMIZZATO --- */
+/* --- CONTATTI --- */
 .contact-card, .social-card, .map-card {
   background: #fff;
   border-radius: 22px;
@@ -498,7 +496,7 @@ footer {
   background: #c8f7c5;
   color: #2196f3;
 }
-/* Sezione Analisi Orecchie - Design Moderno */
+/* Sezione Analisi Orecchie */
 .analisi-title {
   text-align: center;
   margin: 1.5em 0 0.5em 0;
@@ -1255,7 +1253,7 @@ footer {
   .ear-card-row {
     gap: 1em;
     margin: 1.5em 0;
-    /* Mantieni flex-direction: row per tenere le orecchie affiancate */
+    /* Row per tenere le orecchie affiancate */
   }
   
   .ear-card {
@@ -1363,8 +1361,8 @@ footer {
   transition: all 0.3s ease;
   box-shadow: 0 4px 16px rgba(66, 230, 149, 0.3);
   margin: 0 auto;
-  white-space: nowrap; /* Impedisce il text wrap */
-  min-height: 80px; /* Altezza fissa */
+  white-space: nowrap;
+  min-height: 80px;
 }
 
 .product-discover-btn {
@@ -1401,18 +1399,18 @@ footer {
   margin: 0 0 4px 0;
   font-size: 1.2em;
   font-weight: 600;
-  white-space: nowrap; /* Impedisce il text wrap del titolo */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Aggiunge ... se il testo è troppo lungo */
+  text-overflow: ellipsis;
 }
 
 .btn-content p {
   margin: 0;
   font-size: 0.95em;
   opacity: 0.9;
-  white-space: nowrap; /* Impedisce il text wrap della descrizione */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Aggiunge ... se il testo è troppo lungo */
+  text-overflow: ellipsis;
 }
 
 /* Sezione Farmacie Convenzionate */
@@ -1633,7 +1631,6 @@ footer {
   font-size: 1em;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .pharmacy-map-container {
     grid-template-columns: 1fr;
@@ -1677,14 +1674,14 @@ footer {
   }
   
   .pharmacy-search {
-    margin: 0 -8px 20px -8px; /* Rimuovi il margine laterale per sfruttare tutto lo spazio */
+    margin: 0 -8px 20px -8px;
   }
   
   .pharmacy-search input {
-    width: calc(100% - 32px); /* Sottrai il padding orizzontale totale */
+    width: calc(100% - 32px); 
     padding: 12px 50px 12px 16px;
     font-size: 0.95em;
-    border-radius: 20px; /* Bordi meno pronunciati su mobile */
+    border-radius: 20px; 
   }
   
   .pharmacy-map-container {
@@ -1698,20 +1695,20 @@ footer {
 
 @media (max-width: 480px) {
   .pharmacy-discover-btn {
-    flex-direction: row; /* Mantieni orizzontale anche su mobile */
-    text-align: left; /* Testo allineato a sinistra */
+    flex-direction: row; 
+    text-align: left; 
     gap: 12px;
-    min-height: 70px; /* Altezza leggermente ridotta su mobile */
+    min-height: 70px; 
     padding: 16px 20px;
   }
   
   .btn-content {
-    text-align: left; /* Testo allineato a sinistra invece di center */
+    text-align: left; 
     flex: 1;
   }
   
   .btn-content h3 {
-    font-size: 1.05em; /* Leggermente più piccolo su mobile */
+    font-size: 1.05em; 
   }
   
   .btn-content p {
@@ -1719,15 +1716,14 @@ footer {
   }
   
   .pharmacy-discover-btn .material-icons:first-child {
-    font-size: 1.8em; /* Icona leggermente più piccola su mobile */
+    font-size: 1.8em; 
   }
   
   .pharmacy-search {
-    margin: 0 -12px 16px -12px; /* Margini più aggressivi per schermi piccoli */
-  }
+    margin: 0 -12px 16px -12px; 
   
   .pharmacy-search input {
-    width: calc(100% - 24px); /* Meno padding su schermi molto piccoli */
+    width: calc(100% - 24px); 
     padding: 10px 40px 10px 14px;
     font-size: 0.9em;
     border-radius: 18px;
@@ -1751,14 +1747,13 @@ footer {
     padding: 5px 10px;
   }
   
-  /* Floating button FAQ più in alto su mobile per evitare interferenze */
   .floating-faq-btn {
     bottom: 120px;
     right: 16px;
   }
 }
 
-/* Stili per marker Leaflet personalizzati */
+/* Stili per marker Leaflet */
 .custom-pharmacy-marker {
   cursor: pointer;
   transition: all 0.2s ease;
