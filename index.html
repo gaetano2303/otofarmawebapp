@@ -51,6 +51,14 @@
           </div>
           <span class="material-icons">arrow_forward</span>
         </button>
+        <button class="noise-detect-btn" onclick="openNoiseDetector()">
+          <span class="material-icons">mic</span>
+          <div class="btn-content">
+            <h3>Rilevatore di rumori ambientali</h3>
+            <p>Verifica se l'ambiente è troppo rumoroso</p>
+          </div>
+          <span class="material-icons">arrow_forward</span>
+        </button>
       </div>
     </section>
     <section id="chat" class="tab-section">
@@ -212,6 +220,64 @@
         <div class="product-modal-info">
           <h3 id="product-modal-name"></h3>
           <div id="product-modal-description"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Rilevatore Rumori -->
+  <div class="noise-modal" id="noise-modal">
+    <div class="noise-modal-content">
+      <div class="noise-modal-header">
+        <h2><span class="material-icons">mic</span> Rilevatore Rumori Ambientali</h2>
+        <button class="noise-close-btn" onclick="closeNoiseDetector()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="noise-modal-body">
+        <div class="noise-info">
+          <p>Questo strumento misura i livelli di rumore ambientale in tempo reale per aiutarti a valutare se l'ambiente è adatto per il benessere uditivo.</p>
+        </div>
+        
+        <div class="noise-display">
+          <div class="noise-level-circle">
+            <div class="noise-level-inner">
+              <span class="noise-value" id="noise-value">0</span>
+              <span class="noise-unit">dB</span>
+            </div>
+          </div>
+          
+          <div class="noise-status" id="noise-status">
+            <span class="status-text">In attesa...</span>
+          </div>
+        </div>
+        
+        <div class="noise-controls">
+          <button class="noise-start-btn" id="noise-start-btn" onclick="startNoiseDetection()">
+            <span class="material-icons">play_arrow</span> Inizia Rilevamento
+          </button>
+          <button class="noise-stop-btn" id="noise-stop-btn" onclick="stopNoiseDetection()" style="display: none;">
+            <span class="material-icons">stop</span> Ferma Rilevamento
+          </button>
+        </div>
+        
+        <div class="noise-legend">
+          <div class="legend-item quiet">
+            <div class="legend-color"></div>
+            <span>0-40 dB: Silenzioso</span>
+          </div>
+          <div class="legend-item moderate">
+            <div class="legend-color"></div>
+            <span>40-60 dB: Moderato</span>
+          </div>
+          <div class="legend-item loud">
+            <div class="legend-color"></div>
+            <span>60-80 dB: Rumoroso</span>
+          </div>
+          <div class="legend-item very-loud">
+            <div class="legend-color"></div>
+            <span>80+ dB: Molto rumoroso</span>
+          </div>
         </div>
       </div>
     </div>
