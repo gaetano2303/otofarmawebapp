@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="App ufficiale Otofarma per assistenza virtuale, analisi orecchie, test udito e farmacie convenzionate">
 <meta name="theme-color" content="#42e695">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -62,7 +62,10 @@
       </div>
     </section>
     <section id="chat" class="tab-section">
-      <h2><span class="material-icons">chat</span> Chat</h2>
+      <div class="chat-header">
+        <h2><span class="material-icons">chat</span> Chat</h2>
+        <button class="floating-faq-btn" id="open-faq-btn" title="Domande frequenti"><span class="material-icons">help</span></button>
+      </div>
       <div class="chat-container">
         <div class="video-avatar-container">
           <video id="avatar-still" class="avatar-video active" autoplay muted loop playsinline>
@@ -80,7 +83,6 @@
         <input id="chat-input" type="text" placeholder="Chiedi pure!">
         <button class="modern-btn" onclick="sendMessage()"><span class="material-icons">send</span></button>
       </div>
-      <button class="floating-faq-btn" id="open-faq-btn" title="Domande frequenti"><span class="material-icons">help</span></button>
     </section>
     <section id="earcheck" class="tab-section">
       <h2 class="analisi-title"><span class="material-icons" style="font-size:1.2em;vertical-align:-0.1em;">medication</span> <span style="color:#2ecc40;font-weight:700;font-size:1.3em;">Analisi Orecchie</span></h2>

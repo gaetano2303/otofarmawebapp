@@ -28,26 +28,26 @@ function sendMessage() {
   chatArea.appendChild(loader);
   chatArea.scrollTop = chatArea.scrollHeight;
 
-  // Invia richiesta al backend
-  fetch('https://cors-anywhere.herokuapp.com/https://chatbot-1ai.onrender.com/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message })
-  })
-    .then(async res => {
-      let data;
-      try {
-        data = await res.json();
-      } catch (e) {
-        throw new Error('Risposta non valida dal server');
-      }
-      loader.remove();
-      const botMsg = document.createElement('div');
-      botMsg.className = 'chat-msg bot';
-      const botReply = data.reply || 'Nessuna risposta.';
-      botMsg.textContent = botReply;
-      chatArea.appendChild(botMsg);
-      chatArea.scrollTop = chatArea.scrollHeight;
+ // Invia richiesta al backend
+fetch('https://chatbot-ai-i1lr.onrender.com/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ message })
+})
+  .then(async res => {
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      throw new Error('Risposta non valida dal server');
+    }
+    loader.remove();
+    const botMsg = document.createElement('div');
+    botMsg.className = 'chat-msg bot';
+    const botReply = data.reply || 'Nessuna risposta.';
+    botMsg.textContent = botReply;
+    chatArea.appendChild(botMsg);
+    chatArea.scrollTop = chatArea.scrollHeight;
       
       // Avvia l'animazione video-avatar basata sulla lunghezza della risposta
       const responseLength = botReply.length;
